@@ -16,7 +16,7 @@ public class DrawPanel extends JPanel{
 
     // TODO: Make this genereal for all cars
     void moveit(int x, int y){
-        volvoPoint.x = x;
+        volvoPoint.x = x;       //
         volvoPoint.y = y;
     }
 
@@ -35,7 +35,7 @@ public class DrawPanel extends JPanel{
             // if you are starting in IntelliJ.
             volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
         } catch (IOException ex)
-        {
+        {  //System.out.println("Picture not found");     // Felmeddelande
             ex.printStackTrace();
         }
 

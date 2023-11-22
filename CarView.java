@@ -25,9 +25,14 @@ public class CarView extends JFrame{
     JPanel controlPanel = new JPanel();
 
     JPanel gasPanel = new JPanel();
+    JPanel brakePanel = new JPanel(); //
     JSpinner gasSpinner = new JSpinner();
-    int gasAmount = 0;
+    JSpinner brakeSpinner = new JSpinner(); //
+    int gasOrBreakAmount = 0;
     JLabel gasLabel = new JLabel("Amount of gas");
+    JLabel brakeLabel = new JLabel("Amount of brake");         //
+    JButton turnLeftButton = new JButton("Turn left");         //
+    JButton turnRightButton = new JButton("Turn right");       // Lägger till left/right
 
     JButton gasButton = new JButton("Gas");
     JButton brakeButton = new JButton("Brake");
@@ -65,7 +70,7 @@ public class CarView extends JFrame{
         gasSpinner = new JSpinner(spinnerModel);
         gasSpinner.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                gasAmount = (int) ((JSpinner)e.getSource()).getValue();
+                gasOrBreakAmount = (int) ((JSpinner)e.getSource()).getValue();
             }
         });
 
@@ -83,13 +88,15 @@ public class CarView extends JFrame{
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
+        controlPanel.add(turnLeftButton, 6);
+        controlPanel.add(turnRightButton, 7);       //Lägger till left/right i panelen
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
 
 
         startButton.setBackground(Color.blue);
-        startButton.setForeground(Color.green);
+        startButton.setForeground(Color.RED);
         startButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(startButton);
 
@@ -101,11 +108,37 @@ public class CarView extends JFrame{
 
         // This actionListener is for the gas button only
         // TODO: Create more for each component as necessary
+
         gasButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                carC.gas(gasAmount);
+            public void actionPerformed(ActionEvent e) {        // actionbutton gas
+                carC.gas(gasOrBreakAmount);
             }
+        });
+        turnRightButton.addActionListener(new ActionListener() {
+            @Override                                               // actionbutton turn right
+            public void actionPerformed(ActionEvent e) {
+                carC.turnRight();}
+        });
+        turnLeftButton.addActionListener(new ActionListener() {
+            @Override                                               // actionbutton turn left
+            public void actionPerformed(ActionEvent e) {
+                carC.turnLeft();}
+        });
+        brakeButton.addActionListener(new ActionListener() {
+            @Override                                               // actionbutton brake
+            public void actionPerformed(ActionEvent e) {
+                carC.brake(gasOrBreakAmount);}
+        });
+        turboOnButton.addActionListener(new ActionListener() {
+            @Override                                               // actionbutton turbo on
+            public void actionPerformed(ActionEvent e) {
+                carC.turboon();}
+        });
+        turboOffButton.addActionListener(new ActionListener() {
+            @Override                                               // actionbutton turbo off
+            public void actionPerformed(ActionEvent e) {
+                carC.turbooff();}
         });
 
         // Make the frame pack all it's components by respecting the sizes if possible.
