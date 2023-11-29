@@ -29,8 +29,8 @@ public class CarController {
         // Instance of this class
         CarController cc = new CarController();
 
-        cc.cars.add(new Volvo240(4, 100, Color.black, "Volvo240"));
-        cc.cars.add(new Saab95(2, 125, Color.red, "Saab95"));
+        cc.cars.add(new Volvo240(4, 10, Color.black, "Volvo240"));
+        cc.cars.add(new Saab95(2, 300, Color.red, "Saab95"));
         //cc.cars.add(new Scania(2, 60, Color.blue, "Scania"));
 
         // Start a new view and send a reference of self
