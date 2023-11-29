@@ -4,6 +4,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -21,9 +22,11 @@ public class CarView extends JFrame{
 
     // The controller member
     CarController carC;
+    DrawPanel drawP;
     public void addCars(Car car) {
         carC.addCars(car);
     }
+
     public ArrayList<Vehicle> getCars(){
         return carC.getVehicles();
     }

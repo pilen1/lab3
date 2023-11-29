@@ -2,8 +2,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -13,13 +12,16 @@ public class DrawPanel extends JPanel {
 
     CarController carC = new CarController();
     // Just a single image, TODO: Generalize
-    BufferedImage carImage;
+    //BufferedImage carImage;
+
 
     public ArrayList<Vehicle> getCars() {
         return carC.getVehicles();
     }
+    ArrayList<BufferedImage> carImage = new ArrayList<>();
 
-    Map<Vehicle, BufferedImage> vehicleImages = new HashMap<>();
+
+
 
 
 /*    public void bufferImage() {
@@ -55,11 +57,18 @@ public class DrawPanel extends JPanel {
             this.setPreferredSize(new Dimension(x, y));
             this.setBackground(Color.green);
 
+            carC.vehicles.add(new Volvo240(2,100,Color.blue,"Volvo240"));
+            carC.vehicles.add(new Saab95(2,100,Color.red,"Saab95"));
+            carC.vehicles.add(new Scania(2,80,Color.black,"Scania"));
+
             for (Vehicle vehicle : getCars()) {
                 try {
                     String modelName = vehicle.getModelName();
-                    carImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/" + modelName + ".jpg"));
+                    BufferedImage image;
+                    image = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/" + modelName + ".jpg"));
+                    carImage.add(image);
                 } catch (IOException ex) {
+                    // print felmeddelande
                     ex.printStackTrace();
                 }
             }
@@ -94,12 +103,14 @@ public class DrawPanel extends JPanel {
         @Override
         protected void paintComponent (Graphics g){
             super.paintComponent(g);
+            int index = 0;
             for (Vehicle vehicle : getCars()) {
+                setInitialPositions();
                 int x = (int) Math.round(vehicle.getX());
                 int y = (int) Math.round(vehicle.getY());
-                BufferedImage carImage = vehicleImages.get(vehicle);
 
-                g.drawImage(carImage, x, y, null);
+                g.drawImage(carImage.get(index), x, y, null);
+                index += 1;
             }
         }
     }

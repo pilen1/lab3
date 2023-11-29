@@ -29,8 +29,8 @@ public class CarController {
     // A list of cars, modify if needed
     ArrayList<Vehicle> vehicles = new ArrayList<>();        //Ändrad till Car
 
-    void addCars(Car car){
-        vehicles.add(car);
+    public void addCars(Vehicle vehicle){
+        vehicles.add(vehicle);
     }
     //methods:
 
