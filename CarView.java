@@ -4,6 +4,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
@@ -17,23 +18,28 @@ public class CarView extends JFrame{
     private static final int X = 800;
     private static final int Y = 800;
 
+
     // The controller member
     CarController carC;
+    public void addCars(Car car) {
+        carC.addCars(car);
+    }
+    public ArrayList<Vehicle> getCars(){
+        return carC.getVehicles();
+    }
 
     DrawPanel drawPanel = new DrawPanel(X, Y-240);
-
     JPanel controlPanel = new JPanel();
-
     JPanel gasPanel = new JPanel();
-    JPanel brakePanel = new JPanel(); //
+    JPanel bodyPanel = new JPanel();                        //
     JSpinner gasSpinner = new JSpinner();
-    JSpinner brakeSpinner = new JSpinner(); //
+    JSpinner bodyRaiseSpinner = new JSpinner();             //
     int gasOrBreakAmount = 0;
+    int bodyRaiseAmount = 0;                                //
     JLabel gasLabel = new JLabel("Amount of gas");
-    JLabel brakeLabel = new JLabel("Amount of brake");         //
+    JLabel bodyLabel = new JLabel("Angle of body");     //
     JButton turnLeftButton = new JButton("Turn left");         //
     JButton turnRightButton = new JButton("Turn right");       // Lägger till left/right
-
     JButton gasButton = new JButton("Gas");
     JButton brakeButton = new JButton("Brake");
     JButton turboOnButton = new JButton("Saab Turbo on");
@@ -74,11 +80,25 @@ public class CarView extends JFrame{
             }
         });
 
+
+        //bodyRaiseSpinner = new JSpinner(spinnerModel);                          //tog bort
+        bodyRaiseSpinner.addChangeListener(new ChangeListener() {               //
+            public void stateChanged(ChangeEvent e) {                           //
+                bodyRaiseAmount = (int) ((JSpinner)e.getSource()).getValue();   //
+            }
+        });
+
         gasPanel.setLayout(new BorderLayout());
         gasPanel.add(gasLabel, BorderLayout.PAGE_START);
         gasPanel.add(gasSpinner, BorderLayout.PAGE_END);
 
         this.add(gasPanel);
+
+        bodyPanel.setLayout(new BorderLayout());                    //
+        bodyPanel.add(bodyLabel, BorderLayout.PAGE_START);          //
+        bodyPanel.add(bodyRaiseSpinner, BorderLayout.PAGE_END);     //
+
+        this.add(bodyPanel);                                        //
 
         controlPanel.setLayout(new GridLayout(2,4));
 
@@ -96,7 +116,7 @@ public class CarView extends JFrame{
 
 
         startButton.setBackground(Color.blue);
-        startButton.setForeground(Color.RED);
+        startButton.setForeground(Color.black);
         startButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(startButton);
 
@@ -115,6 +135,7 @@ public class CarView extends JFrame{
                 carC.gas(gasOrBreakAmount);
             }
         });
+
         turnRightButton.addActionListener(new ActionListener() {
             @Override                                               // actionbutton turn right
             public void actionPerformed(ActionEvent e) {
@@ -139,6 +160,16 @@ public class CarView extends JFrame{
             @Override                                               // actionbutton turbo off
             public void actionPerformed(ActionEvent e) {
                 carC.turbooff();}
+        });
+        liftBedButton.addActionListener(new ActionListener() {
+            @Override                                               // actionbutton turbo off
+            public void actionPerformed(ActionEvent e) {
+                carC.liftBed(bodyRaiseAmount);}
+        });
+        lowerBedButton.addActionListener(new ActionListener() {
+            @Override                                               // actionbutton turbo off
+            public void actionPerformed(ActionEvent e) {
+                carC.lowerBed(bodyRaiseAmount);}
         });
 
         // Make the frame pack all it's components by respecting the sizes if possible.

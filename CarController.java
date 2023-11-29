@@ -21,16 +21,24 @@ public class CarController {
 
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
-    // A list of cars, modify if needed
-    ArrayList<Car> cars = new ArrayList<>();        //Ändrad till Car
 
+    public ArrayList<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    // A list of cars, modify if needed
+    ArrayList<Vehicle> vehicles = new ArrayList<>();        //Ändrad till Car
+
+    void addCars(Car car){
+        vehicles.add(car);
+    }
     //methods:
 
     public static void main(String[] args) {
         // Instance of this class
         CarController cc = new CarController();
 
-        cc.cars.add(new Volvo240(4, 100, Color.blue, "Volvo240"));
+        cc.vehicles.add(new Volvo240(4, 100, Color.blue, "Volvo240"));
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -44,53 +52,78 @@ public class CarController {
      * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (Car car : cars) {
-                car.move();
-                int x = (int) Math.round(car.getX());       //Tog bort get position
-                int y = (int) Math.round(car.getY());
+            for (Vehicle vehicle : vehicles) {
+                vehicle.move();
+                int x = (int) Math.round(vehicle.getX());
+                int y = (int) Math.round(vehicle.getY());
                 frame.drawPanel.moveit(x, y);
-                // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
+                if (vehicle.getX() > 800 || vehicle.getX() < 0){
+                    vehicle.stopEngine();
+                    vehicle.turnleft();
+                    vehicle.turnleft();
+                    vehicle.startEngine();
+                }
+                if (vehicle.getX() > 800) {
+                    vehicle.setX(800);
+                }
+                else if (vehicle.getX() < 0){
+                    vehicle.setX(0);
+                }
             }
+            // repaint() calls the paintComponent method of the panel
+            frame.drawPanel.repaint();
         }
     }
 
     // Calls the gas method for each car once
     void gas(int amount) {
         double gas = ((double) amount) / 100;
-        for (Car car : cars
-        ) {
-            car.gas(gas);
+        for (Vehicle vehicle : vehicles) {
+            vehicle.gas(gas);
         }
     }
     void turnRight() {
-        for (Car car : cars) {
-            car.turnright();
+        for (Vehicle vehicle : vehicles) {
+            vehicle.turnright();
         }
     }
     void turnLeft() {
-        for (Car car : cars) {
-            car.turnleft();
+        for (Vehicle vehicle : vehicles) {
+            vehicle.turnleft();
         }
     }
     void brake(int amount) {
         double brake = ((double) amount) / 100;
-        for (Car car : cars
+        for (Vehicle vehicle : vehicles
         ) {
-            car.brake(brake);
+            vehicle.brake(brake);
         }
     }
     void turboon() {
-        for (Car car : cars) {
-            if (car instanceof Saab95) {
-                ((Saab95) car).setTurboOn();        // om det är en saab så går det att använda turboon/off
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof Saab95) {
+                ((Saab95) vehicle).setTurboOn();        // om det är en saab så går det att använda turboon/off
             }
         }
     }
     void turbooff() {
-        for (Car car : cars) {
-            if (car instanceof Saab95) {
-                ((Saab95) car).setTurboOff();
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof Saab95) {
+                ((Saab95) vehicle).setTurboOff();
+            }
+        }
+    }
+    void liftBed(int amount) {
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof Scania) {
+                ((Scania) vehicle).raiseBody(amount);
+            }
+        }
+    }
+    void lowerBed(int amount) {
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof Scania) {
+                ((Scania) vehicle).lowerBody(amount);
             }
         }
     }
