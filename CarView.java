@@ -113,6 +113,8 @@ public class CarView extends JFrame{
         controlPanel.add(lowerBedButton, 5);
         controlPanel.add(turnLeftButton, 6);
         controlPanel.add(turnRightButton, 7);       //Lägger till left/right i panelen
+        controlPanel.add(startButton,8);
+        controlPanel.add(stopButton,9);
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
@@ -173,6 +175,16 @@ public class CarView extends JFrame{
             @Override                                               // actionbutton turbo off
             public void actionPerformed(ActionEvent e) {
                 carC.lowerBed(bodyRaiseAmount);}
+        });
+        stopButton.addActionListener(new ActionListener() {
+            @Override                                               // actionbutton turbo off
+            public void actionPerformed(ActionEvent e) {
+                carC.stopengine();}
+        });
+        startButton.addActionListener(new ActionListener() {
+            @Override                                               // actionbutton turbo off
+            public void actionPerformed(ActionEvent e) {
+                carC.startengine();}
         });
 
         // Make the frame pack all it's components by respecting the sizes if possible.

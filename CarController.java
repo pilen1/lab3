@@ -39,6 +39,8 @@ public class CarController {
         CarController cc = new CarController();
 
         cc.vehicles.add(new Volvo240(4, 100, Color.blue, "Volvo240"));
+        cc.vehicles.add(new Saab95(2,100,Color.red,"Saab95"));
+        cc.vehicles.add(new Scania(2, 50, Color.black, "Scania"));
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -56,7 +58,8 @@ public class CarController {
                 vehicle.move();
                 int x = (int) Math.round(vehicle.getX());
                 int y = (int) Math.round(vehicle.getY());
-                frame.drawPanel.moveit(x, y);
+                //frame.drawPanel.moveit(x, y);
+                frame.drawPanel.sendToDraw(vehicles);
                 if (vehicle.getX() > 800 || vehicle.getX() < 0){
                     vehicle.stopEngine();
                     vehicle.turnleft();
@@ -125,6 +128,18 @@ public class CarController {
             if (vehicle instanceof Scania) {
                 ((Scania) vehicle).lowerBody(amount);
             }
+        }
+    }
+    void startengine() {
+        for (Vehicle vehicle : vehicles) {
+             vehicle.startEngine();
+
+        }
+    }
+    void stopengine() {
+        for (Vehicle vehicle : vehicles) {
+            vehicle.stopEngine();
+
         }
     }
 }
