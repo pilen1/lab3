@@ -29,17 +29,12 @@ public class CarController {
     // A list of cars, modify if needed
     ArrayList<Vehicle> vehicles = new ArrayList<>();        //Ändrad till Car
 
-    public void addCars(Vehicle vehicle){
-        vehicles.add(vehicle);
-    }
-    //methods:
-
     public static void main(String[] args) {
         // Instance of this class
         CarController cc = new CarController();
 
         cc.vehicles.add(new Volvo240(4, 100, Color.blue, "Volvo240"));
-        cc.vehicles.add(new Saab95(2,100,Color.red,"Saab95"));
+        cc.vehicles.add(new Saab95(2, 125, Color.red, "Saab95"));
         cc.vehicles.add(new Scania(2, 50, Color.black, "Scania"));
 
         // Start a new view and send a reference of self
@@ -60,86 +55,96 @@ public class CarController {
                 int y = (int) Math.round(vehicle.getY());
                 //frame.drawPanel.moveit(x, y);
                 frame.drawPanel.sendToDraw(vehicles);
-                if (vehicle.getX() > 800 || vehicle.getX() < 0){
+                if (vehicle.getX() > 700 || vehicle.getX() < 0) {
                     vehicle.stopEngine();
                     vehicle.turnleft();
                     vehicle.turnleft();
                     vehicle.startEngine();
                 }
-                if (vehicle.getX() > 800) {
-                    vehicle.setX(800);
-                }
-                else if (vehicle.getX() < 0){
+                if (vehicle.getX() > 700) {
+                    vehicle.setX(700);
+                } else if (vehicle.getX() < 0) {
                     vehicle.setX(0);
                 }
             }
-            // repaint() calls the paintComponent method of the panel
-            frame.drawPanel.repaint();
+                // repaint() calls the paintComponent method of the panel
+                frame.drawPanel.repaint();
+            }
+        }
+
+        // Calls the gas method for each car once
+        void gas(int amount) {
+            double gas = ((double) amount) / 100;
+            for (Vehicle vehicle : vehicles) {
+                if (vehicle.currentSpeed >= 0.1)
+                    vehicle.gas(gas);
+            }
+        }
+
+        void turnRight() {
+            for (Vehicle vehicle : vehicles) {
+                vehicle.turnright();
+            }
+        }
+
+        void turnLeft() {
+            for (Vehicle vehicle : vehicles) {
+                vehicle.turnleft();
+            }
+        }
+
+        void brake(int amount) {
+            double brake = ((double) amount) / 100;
+            for (Vehicle vehicle : vehicles
+            ) {
+                vehicle.brake(brake);
+            }
+        }
+
+        void turboon() {
+            for (Vehicle vehicle : vehicles) {
+                if (vehicle instanceof Saab95) {
+                    ((Saab95) vehicle).setTurboOn();        // om det är en saab så går det att använda turboon/off
+                }
+            }
+        }
+
+        void turbooff() {
+            for (Vehicle vehicle : vehicles) {
+                if (vehicle instanceof Saab95) {
+                    ((Saab95) vehicle).setTurboOff();
+                }
+            }
+        }
+
+        void liftBed(int amount) {
+            for (Vehicle vehicle : vehicles) {
+                if (vehicle instanceof Scania) {
+                    ((Scania) vehicle).raiseBody(amount);
+                }
+            }
+        }
+
+        void lowerBed(int amount) {
+            for (Vehicle vehicle : vehicles) {
+                if (vehicle instanceof Scania) {
+                    ((Scania) vehicle).lowerBody(amount);
+                }
+            }
+        }
+
+        void startengine() {
+            for (Vehicle vehicle : vehicles) {
+                vehicle.startEngine();
+
+            }
+        }
+
+        void stopengine() {
+            for (Vehicle vehicle : vehicles) {
+                vehicle.stopEngine();
+
+            }
         }
     }
 
-    // Calls the gas method for each car once
-    void gas(int amount) {
-        double gas = ((double) amount) / 100;
-        for (Vehicle vehicle : vehicles) {
-            vehicle.gas(gas);
-        }
-    }
-    void turnRight() {
-        for (Vehicle vehicle : vehicles) {
-            vehicle.turnright();
-        }
-    }
-    void turnLeft() {
-        for (Vehicle vehicle : vehicles) {
-            vehicle.turnleft();
-        }
-    }
-    void brake(int amount) {
-        double brake = ((double) amount) / 100;
-        for (Vehicle vehicle : vehicles
-        ) {
-            vehicle.brake(brake);
-        }
-    }
-    void turboon() {
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle instanceof Saab95) {
-                ((Saab95) vehicle).setTurboOn();        // om det är en saab så går det att använda turboon/off
-            }
-        }
-    }
-    void turbooff() {
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle instanceof Saab95) {
-                ((Saab95) vehicle).setTurboOff();
-            }
-        }
-    }
-    void liftBed(int amount) {
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle instanceof Scania) {
-                ((Scania) vehicle).raiseBody(amount);
-            }
-        }
-    }
-    void lowerBed(int amount) {
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle instanceof Scania) {
-                ((Scania) vehicle).lowerBody(amount);
-            }
-        }
-    }
-    void startengine() {
-        for (Vehicle vehicle : vehicles) {
-             vehicle.startEngine();
-
-        }
-    }
-    void stopengine() {
-        for (Vehicle vehicle : vehicles) {
-            vehicle.stopEngine();
-
-        }
-    }
-}

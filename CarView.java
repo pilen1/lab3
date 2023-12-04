@@ -22,14 +22,6 @@ public class CarView extends JFrame{
 
     // The controller member
     CarController carC;
-    DrawPanel drawP;
-    public void addCars(Car car) {
-        carC.addCars(car);
-    }
-
-    public ArrayList<Vehicle> getCars(){
-        return carC.getVehicles();
-    }
 
     DrawPanel drawPanel = new DrawPanel(X, Y-240);
     JPanel controlPanel = new JPanel();
@@ -45,22 +37,18 @@ public class CarView extends JFrame{
     JButton turnRightButton = new JButton("Turn right");       // Lägger till left/right
     JButton gasButton = new JButton("Gas");
     JButton brakeButton = new JButton("Brake");
-    JButton turboOnButton = new JButton("Saab Turbo on");
-    JButton turboOffButton = new JButton("Saab Turbo off");
-    JButton liftBedButton = new JButton("Scania Lift Bed");
-    JButton lowerBedButton = new JButton("Lower Lift Bed");
+    JButton turboOnButton = new JButton("Turbo on");
+    JButton turboOffButton = new JButton("Turbo off");
+    JButton liftBedButton = new JButton("Lift Bed");
+    JButton lowerBedButton = new JButton("Lower Bed");
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
 
-    // Constructor
     public CarView(String framename, CarController cc){
         this.carC = cc;
         initComponents(framename);
     }
-
-    // Sets everything in place and fits everything
-    // TODO: Take a good look and make sure you understand how these methods and components work
     private void initComponents(String title) {
 
         this.setTitle(title);
@@ -131,9 +119,6 @@ public class CarView extends JFrame{
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(stopButton);
 
-        // This actionListener is for the gas button only
-        // TODO: Create more for each component as necessary
-
         gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {        // actionbutton gas
@@ -187,7 +172,6 @@ public class CarView extends JFrame{
                 carC.startengine();}
         });
 
-        // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
 
         // Get the computer screen resolution

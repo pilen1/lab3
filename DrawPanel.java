@@ -2,8 +2,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -28,7 +26,7 @@ public class DrawPanel extends JPanel {
     public DrawPanel(int x, int y) {
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
-        this.setBackground(Color.green);
+        this.setBackground(Color.white);
 
         carC.vehicles.add(new Volvo240(2, 1, Color.blue, "Volvo240"));
         carC.vehicles.add(new Saab95(2, 100, Color.red, "Saab95"));
@@ -37,11 +35,9 @@ public class DrawPanel extends JPanel {
         for (Vehicle vehicle : getCars()) {
             try {
                 String modelName = vehicle.getModelName();
-
                 BufferedImage image = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/" + modelName + ".jpg"));
                 carImage.add(image);
             } catch (IOException ex) {
-                // print felmeddelande
                 ex.printStackTrace();
             }
         }
